@@ -1,3 +1,6 @@
+//------------------------------------------------------------------------------
+//	File: Symbol.cpp
+//------------------------------------------------------------------------------
 #include "Symbol.h"
 
 using namespace std;
@@ -8,8 +11,8 @@ namespace hashing
 	//------------------------------------------------------------------------------
 	//	Constructor
 	//------------------------------------------------------------------------------
-	Symbol::Symbol(const string& rStr, const long long hash) :
-		m_string(rStr), m_hash(hash) {};
+	Symbol::Symbol( const string& rStr, const long hash ) :
+		m_string( rStr ), m_hash( hash ) {};
 
 	const string& Symbol::str() const
 	{
@@ -33,3 +36,10 @@ namespace hashing
 		return s.m_hash == m_hash;
 	}
 }
+
+//------------------------------------------------------------------------------
+//                              Modification History
+//------------------------------------------------------------------------------
+// Wil van Meurs													  2019-09-19
+//      Initial version
+//------------------------------------------------------------------------------

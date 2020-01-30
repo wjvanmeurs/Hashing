@@ -1,12 +1,12 @@
 #pragma once
 #pragma warning( disable : 4251)
 //------------------------------------------------------------------------------
-//	Class Symbol
+//	File: Symbol.h
 //
-//	This class associates a string with its hash value.
-//	Symbol instances are maintained in a singleton SymbolTable object
-//	The Symbol instance is a stand-in for the string it contains and permits 
-//	efficient string equality tests.
+//		Class Symbol asssoicates a string with its corresponding hash value.
+//		Symbols are created by an instance of SymbolTable, which guatantees
+//		that a given string is associated with only one hash-value and that a 
+//		given hash-value is associated with at most one string value.
 //------------------------------------------------------------------------------
 #include <iostream>
 #include <map>
@@ -23,19 +23,20 @@ namespace hashing
 	class HASHING_LINKAGE Symbol
 	{
 	private:
-		//	hide copy constructor
-		Symbol(const Symbol&);
+		//	hide copy and assignment constructors
+		Symbol( const Symbol&) ;
+		bool operator==(const Symbol& s) const;
 
 	public:
-		Symbol(const string&, const long long);
+		Symbol( const string&, const long );
 		virtual ~Symbol() {};
-		bool operator ==(const Symbol& s) const;
 
 		const string&	str()	const;
 		const long long hash()	const;
 
 		void Print() const;
 
+	private:
 		string                  m_string;
 		long long				m_hash;
 	};

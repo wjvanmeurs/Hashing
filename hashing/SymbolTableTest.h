@@ -1,11 +1,10 @@
 #pragma once;
 //------------------------------------------------------------------------------
-//	Class SymbolTable
+//	File: SymbolTableTest.h
 //
-//		This singleton class maintains Symbol objects, one for every string 
-//		encountered.
-//		Symbols can be retrieved on string value or on hash value.
-//		
+//		This class extends SymbolTable with the capability to enter a Symbol
+//		with given string value and hash value. This enables testing SymbolTable
+//		behavior in the presence of collisions or table overflow.
 //------------------------------------------------------------------------------
 #include <iostream>
 #include <map>
@@ -13,6 +12,7 @@
 #include "hashing_linkage.h"
 #include "hashing.h"
 #include "Symbol.h"
+#include "SymbolTable.h"
 
 using std::map;
 using std::string;
@@ -20,33 +20,24 @@ using std::string;
 
 namespace hashing
 {
-	class HASHING_LINKAGE SymbolTable
+	class HASHING_LINKAGE SymbolTableTest : public SymbolTable
 	{
-	protected:
-		map<long, Symbol const*>		m_symbolMap;
-
 	public:
 
-		SymbolTable() : m_Collisions(0) {};
-		virtual ~SymbolTable() {};
+		SymbolTableTest() {};
+		virtual ~SymbolTableTest() {};
 
-		static SymbolTable& SingleInstance();
+		static SymbolTableTest& GetSingleInstance();
 
-		bool HasSymbolFor(const long hashValue);
-
-		const Symbol& GetSymbolFor( const long hashValue );
-		const Symbol& GetSymbolFor( const string str );
-
-		virtual void Print() const;
-
-	protected:
-		int		m_Collisions;
+		const Symbol& InsertSymbolFor(
+			const long hashValue,
+			const string );
 	};
 }  // namespace hashing
 
 //------------------------------------------------------------------------------
 //                              Modification History
 //------------------------------------------------------------------------------
-// Wil van Meurs													  2019-09-30
+// Wil van Meurs													  2019-10-04
 //      Initial version
 //------------------------------------------------------------------------------

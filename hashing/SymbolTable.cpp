@@ -63,7 +63,7 @@ namespace hashing
 		else do
 		{
 			const Symbol& rSymbol = GetSymbolFor(hashValue);
-			if (rSymbol.m_string == str)
+			if (rSymbol.str() == str)
 			{
 				pSymbol = &rSymbol;
 			}
