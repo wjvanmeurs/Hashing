@@ -18,24 +18,91 @@ namespace hashing
 
 
 	//----------------------------------------------------------------------------
-	//	hasSymbolFor
-	//	Returns true only if the symboltable has a Symbol for the supplied 
-	//	hashvalue
+	//	FindSymbolFor
+	//		Return true if a Symbol is present for the supplied string;
+	//		In case the Symbol does not exist, proposedHash is the hash value
+	//		suggested to be asscoiated with the string value.
 	//----------------------------------------------------------------------------
-	bool SymbolTable::HasSymbolFor(const long hashValue)
+	bool SymbolTable::FindSymbolFor( const string& str, long proposedHash )
 	{
-		return m_symbolMap.count(hashValue);
+		bool		found = false;
+		long 		proposedHash = compute_hash( str );
+		bool		matchingHash = HasSymbolFor( proposedHash );
+		const Symbol* pSymbol = NULL;
+
+		if ( matchingHash )
+		{
+			if ( str == m_symbolMap[ proposedHash ]->str )
+			{
+				//	A symbol exists for this string
+				found = true;
+			}
+			else do
+			{
+				m_Collisions++;
+				if (proposedHash == LLONG_MAX )
+				{
+					throw std::overflow_error( 
+						"SymbolTable instance overflowed" );
+				}
+				matchingHash = HasSymbolFor( ++proposedHash );
+				if ( matchingHash )
+				{
+					if (str == m_symbolMap[proposedHash]->str)
+					{
+						//	A symbol exists for this string
+						found = true;
+					}
+				}
+			} while ( matchingHash && !found )
+		}
+		else do
+		{
+			const Symbol& rSymbol = GetSymbolFor(hashValue);
+			if (rSymbol.str() == str)
+			{
+				pSymbol = &rSymbol;
+			}
+			else
+			{
+				m_Collisions++;
+				if (hashValue == LLONG_MAX)
+				{
+					throw std::overflow_error("SymbolTable instance overflowed");
+				}
+				matchingHash = HasSymbolFor(++hashValue);
+				if (!matchingHash)
+				{
+					pSymbol = new Symbol(str, hashValue);
+					m_symbolMap[hashValue] = pSymbol;
+				}
+			}
+		} while (matchingHash && !pSymbol);
+		return *pSymbol;
 	}
 
 
 	//----------------------------------------------------------------------------
 	//	GetSymbolFor
-	//	Returns reference to the Symbol associated with the supplied hash value.
-	//	Raises exception std::out_of_range if no Symbol exists for the hash
+	//		Returns reference to the Symbol associated with the supplied hash value.
+	//		Raises exception std::out_of_range if no Symbol exists for the hash
 	//----------------------------------------------------------------------------
 	const Symbol& SymbolTable::GetSymbolFor(const long hashValue)
 	{
 		return *m_symbolMap.at(hashValue);
+	}
+
+
+	//----------------------------------------------------------------------------
+	//	SetSymbol
+	//	Create a symbol for the supplied string and hash value and store it
+	//	in the SymbolTable.
+	//----------------------------------------------------------------------------
+	const Symbol& SymbolTable::SetSymbol( const string& str, long hashValue )
+	{
+		Symbol* pSymbol = new Symbol( str, hashValue );
+		m_symbolMap[ hashValue ] = pSymbol;
+		return *pSymbol;
 	}
 
 
