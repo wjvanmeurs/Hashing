@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hashing", "hashing\hashing.vcxproj", "{3B39D097-026C-491B-9654-2025CA1F7763}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hashingtest", "hashingtest\hashingtest.vcxproj", "{2BC83E30-53A4-440B-89A0-EE7F8D880DFC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3B39D097-026C-491B-9654-2025CA1F7763} = {3B39D097-026C-491B-9654-2025CA1F7763}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

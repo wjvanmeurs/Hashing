@@ -4,45 +4,50 @@
 //	Main program for testing SymbolTable features
 //------------------------------------------------------------------------------
 #include <iostream>
-#include "SymbolTableTest.h"
+
 #include "hashing_linkage.h"
+#include "SymbolTable.h" 
+
+#include "Hasher1.h"
+#include "HasherMax.h"
 
 using std::cout;
 using hashing::Symbol;
 using hashing::SymbolTable;
-using hashing::SymbolTableTest;
+using hashing::Hasher;
+using hashing::Hasher1;
+using hashing::HasherMax;
 
 int main()
 {
-	SymbolTableTest* pSymbolTableTest = new SymbolTableTest();
+	Hasher*	pHasher1 =		new Hasher1;
+	Hasher*	pHasherMax =	new HasherMax;
 
-	const Symbol& symbolA = pSymbolTableTest->GetSymbolFor("firstString");
-	const Symbol& symbolB = pSymbolTableTest->GetSymbolFor("secondString");
-	const Symbol& symbolC = pSymbolTableTest->GetSymbolFor("thirdString");
+	SymbolTable* pSymbolTable = new SymbolTable();
 
-	const long	lHash = 1;
-	pSymbolTableTest->PushSymbolFor(lHash, "a");
-	pSymbolTableTest->PushSymbolFor(lHash, "b");
-	pSymbolTableTest->PushSymbolFor(lHash, "c");
-	pSymbolTableTest->PushSymbolFor(lHash, "d");
+	// This SymbolTable instance now hashes all strings on value 1:
+	pSymbolTable->SetHasher( pHasher1 );
+	const Symbol& symbolA = pSymbolTable->GetSymbolForString("firstString");
+	const Symbol& symbolB = pSymbolTable->GetSymbolForString("secondString");
+	const Symbol& symbolC = pSymbolTable->GetSymbolForString("thirdString");
 
-	const long	lHashMax = LONG_MAX - 2;
-
+	//	This SymbolTable now hashes all strings to LLONG_MAX-2
+	pSymbolTable->SetHasher( pHasherMax );
 	try
 	{
-		pSymbolTableTest->PushSymbolFor(lHashMax, "A");
-		pSymbolTableTest->PushSymbolFor(lHashMax, "B");
-		pSymbolTableTest->PushSymbolFor(lHashMax, "C");
-		pSymbolTableTest->PushSymbolFor(lHashMax, "D");
+		const Symbol& symbolD = pSymbolTable->GetSymbolForString("d");
+		const Symbol& symbolE = pSymbolTable->GetSymbolForString("e");
+		const Symbol& symbolF = pSymbolTable->GetSymbolForString("f");
 	}
+
 	catch (std::overflow_error exc)
 	{
 		cout << "Exception occurred" << std::endl;
 	}
 
-	pSymbolTableTest->Print();
+	pSymbolTable->Print();
 
-	getchar();
+	int c = getchar();
 	exit(0);
 }
 

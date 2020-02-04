@@ -23,7 +23,7 @@ namespace hashing
 	//----------------------------------------------------------------------------
 	bool SymbolTable::HasSymbolFor( const long& hashValue) const
 	{
-		return !m_symbolMap.at( hashValue );
+		return m_symbolMap.count( hashValue );
 	}
 
 
@@ -34,9 +34,9 @@ namespace hashing
 	//		suggested for association with the string value.
 	//---------------------------------------------------------------------------
 	bool SymbolTable::FindSymbolForString( 
-		const string& str, long proposedHash )
+		const string& str, long& proposedHash )
 	{
-		proposedHash =	m_Hasher.Hash( str );
+		proposedHash =	m_pHasher->Hash( str );
 
 		bool			found = false;
 		bool			matchingHash = HasSymbolFor( proposedHash );
@@ -52,7 +52,7 @@ namespace hashing
 			else do
 			{
 				m_Collisions++;
-				if ( proposedHash == LLONG_MAX )
+				if ( proposedHash == LONG_MAX )
 				{
 					throw std::overflow_error( 
 						"SymbolTable instance overflowed" );
@@ -152,9 +152,10 @@ namespace hashing
 	//	SetHasher
 	//		Install hasher for string hashing
 	//----------------------------------------------------------------------------
-	void SymbolTable::SetHasher( Hasher& hasher ) 
+	void SymbolTable::SetHasher( Hasher* pHasher )
 	{
-		m_Hasher = hasher;
+		delete m_pHasher;
+		m_pHasher = pHasher;
 	}
 }  // namespace hashing
 

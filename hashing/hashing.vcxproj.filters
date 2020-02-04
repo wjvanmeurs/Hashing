@@ -30,9 +30,6 @@
     <ClInclude Include="hashing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SymbolTableTest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Hasher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -48,9 +45,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="hashing.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SymbolTableTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Hasher.cpp">

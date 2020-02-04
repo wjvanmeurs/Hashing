@@ -157,7 +157,6 @@
     <ClInclude Include="hashing_linkage.h" />
     <ClInclude Include="Symbol.h" />
     <ClInclude Include="SymbolTable.h" />
-    <ClInclude Include="SymbolTableTest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -165,7 +164,6 @@
     <ClCompile Include="hashing.cpp" />
     <ClCompile Include="Symbol.cpp" />
     <ClCompile Include="SymbolTable.cpp" />
-    <ClCompile Include="SymbolTableTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

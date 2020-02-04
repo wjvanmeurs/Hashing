@@ -37,8 +37,12 @@ namespace hashing
 		const Symbol& SetSymbol( const string& str, long hashValue );
 
 	public:
-		SymbolTable() : m_Collisions(0) {};
-		virtual ~SymbolTable() {};
+		SymbolTable() : 
+			m_Collisions(0), m_pHasher(new Hasher) {};
+		virtual ~SymbolTable() 
+		{
+			delete m_pHasher;
+		};
 
 		static SymbolTable& SingleInstance();
 
@@ -48,7 +52,7 @@ namespace hashing
 		//	Return true only if a Symbol is present for the supplied string;
 		//	In case the Symbol does not exist, proposedHash is the hash value
 		//	suggested for association with the string value.
-		bool FindSymbolForString( const string& str, long proposedHash );
+		bool FindSymbolForString( const string& str, long& proposedHash );
 
 		//	Return reference to the symbol for the supplied string value
 		//	Create the Symbol of it is not yet present in the SymbolTable
@@ -62,13 +66,13 @@ namespace hashing
 		virtual void Print() const;
 
 		//	Install hasher for string hashing 
-		void SetHasher( Hasher& hasher );
+		void SetHasher( Hasher* pHasher );
 
 	protected:
 		int		m_Collisions;
 
-	protected:
-		Hasher	m_Hasher;
+	public:
+		Hasher*	m_pHasher;
 	};
 }  // namespace hashing
 
