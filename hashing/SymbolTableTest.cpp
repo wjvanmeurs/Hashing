@@ -41,7 +41,7 @@ namespace hashing
 		else do
 		{
 			//	This slot is already occupied
-			const Symbol& rSymbol = SymbolTable::GetSymbolFor( hashValue );
+			const Symbol& rSymbol = SymbolTable::GetSymbolForHash( hashValue );
 			if ( rSymbol.str() == str )
 			{
 				//	This is known hash/string combination

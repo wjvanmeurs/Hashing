@@ -12,6 +12,7 @@
 
 #include "hashing_linkage.h"
 #include "hashing.h"
+#include "Hasher.h"
 #include "Symbol.h"
 
 using std::map;
@@ -31,9 +32,9 @@ namespace hashing
 		bool FindSymbolFor( const string&, long proposedHash );
 
 		//	Create a symbol for the supplied string and hash value and store it
-		//	in the SymbolTable.
-		const Symbol& SetSymbol( const string&, long proposedHash );
-
+		//	in the SymbolTable; return reference to the new Symbol.
+		//	Raise std::out_of_range exception if a Symbol already exists.
+		const Symbol& SetSymbol( const string& str, long hashValue );
 
 	public:
 		SymbolTable() : m_Collisions(0) {};
@@ -41,24 +42,36 @@ namespace hashing
 
 		static SymbolTable& SingleInstance();
 
-		//	Return true if a symbol is present for the supplied hash value
-		bool HasSymbolFor( const long hashValue& ) const;
+		//	Return true only if a symbol is present for the supplied hash value
+		bool HasSymbolFor( const long& hashValue ) const;
 
-		//	Return the symbol that is stored for the specified hash value
-		//	Throw out_of_range exception if no symbol present.
-		const Symbol& GetSymbolFor( const long hashValue& ) const;
+		//	Return true only if a Symbol is present for the supplied string;
+		//	In case the Symbol does not exist, proposedHash is the hash value
+		//	suggested for association with the string value.
+		bool FindSymbolForString( const string& str, long proposedHash );
 
-		//	Return the symbol that is stored for the specified string value
-		//	If no symbol exists, creat one and enter it into symbol table
-		const Symbol& GetSymbolFor(const long hashValue&) const;
+		//	Return reference to the symbol for the supplied string value
+		//	Create the Symbol of it is not yet present in the SymbolTable
+		const Symbol& GetSymbolForString( const string& str );
+
+		//	Returns reference to the Symbol associated with the supplied hash value.
+		//	Raises exception std::out_of_range if no Symbol exists for the hash
+		const Symbol& GetSymbolForHash( const long& hashValue ) const;			
 
 		//	Print content
 		virtual void Print() const;
 
+		//	Install hasher for string hashing 
+		void SetHasher( Hasher& hasher );
+
 	protected:
 		int		m_Collisions;
+
+	protected:
+		Hasher	m_Hasher;
 	};
 }  // namespace hashing
+
 
 //------------------------------------------------------------------------------
 //                              Modification History

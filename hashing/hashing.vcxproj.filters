@@ -33,6 +33,9 @@
     <ClInclude Include="SymbolTableTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Hasher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -48,6 +51,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SymbolTableTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hasher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

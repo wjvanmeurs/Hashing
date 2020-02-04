@@ -10,7 +10,7 @@
 
 using namespace std;
 
-HASHING_LINKAGE long compute_hash(string const& s) {
+HASHING_LINKAGE long compute_hash( string const& s ) {
 	const int p = 127;
 	const long m = long( 1e9 + 9 );
 	long hash_value = 0;
